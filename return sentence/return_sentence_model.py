@@ -1,14 +1,14 @@
 #! -*- coding: utf-8 -*-
 # return the token embeddings to the sentences utilizing network model
 
-from bert4keras.backend import keras, search_layer, K
-from keras.models import Model
 import numpy as np
+from keras.models import Model
+from bert4keras.optimizers import Adam
 from bert4keras.tokenizers import Tokenizer
-from keras.engine.topology import get_source_inputs
 from keras.layers import Input, Dense
 from sklearn.metrics import accuracy_score
-
+from bert4keras.backend import keras, search_layer, K
+from bert4keras.backend import K
 
 data_path = 'datasets/lcqmc/lcqmc.train.data'
 embedding_matrix = np.load('datasets/lcqmc/token_embedding/embedding_matrix.npy', allow_pickle=True)
@@ -30,13 +30,13 @@ def convert_input_data(data_path):
     for text in train_data:
         token_ids, segment_ids = tokenizer.encode(text[0], text[1], maxlen=128)
         for id in token_ids:
-            embedding_list.extend(embedding_matrix[id])
+            embedding_list.append(embedding_matrix[id])
         token_list.extend(token_ids)
         sentence_len.append(len(token_ids))
     print(len(embedding_list))
     print(len(token_list))
     print(sum(sentence_len))
-    return embedding_list, token_list, sentence_len
+    return np.array(embedding_list), np.array(token_list), sentence_len
 
 
 def return_sentences(token_ids, length):
@@ -48,7 +48,7 @@ def return_sentences(token_ids, length):
     return sentences
 
 
-inputs = Input(shape=(10,))
+inputs = Input(shape=(768,))
 x = Dense(100, activation='relu')(inputs)
 x = Dense(100, activation='relu')(x)
 output = Dense(21128, activation='softmax')(x)
