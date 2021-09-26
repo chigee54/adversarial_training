@@ -32,9 +32,6 @@ def convert_input_data(data_path):
             embedding_list.append(embedding_matrix[id])
         token_list.extend(token_ids)
         sentence_len.append(len(token_ids))
-    print(len(embedding_list))
-    print(len(token_list))
-    print(sum(sentence_len))
     return np.array(embedding_list), np.array(token_list), sentence_len
 
 
@@ -42,7 +39,8 @@ def return_sentences(token_ids, length):
     sentences = []
     tokens = tokenizer.ids_to_tokens(token_ids)
     for len in length:
-        sentence_pair = ''.join(tokens.pop(len))
+        sentence_pair = ''.join(tokens[:len])
+        tokens = tokens[len:]
         sentences.append(sentence_pair)
     return sentences
 
