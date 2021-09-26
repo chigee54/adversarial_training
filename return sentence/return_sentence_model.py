@@ -8,7 +8,6 @@ from bert4keras.tokenizers import Tokenizer
 from keras.layers import Input, Dense
 from sklearn.metrics import accuracy_score
 from bert4keras.backend import keras, search_layer, K
-from bert4keras.backend import K
 
 data_path = 'datasets/lcqmc/lcqmc.train.data'
 embedding_matrix = np.load('datasets/lcqmc/token_embedding/embedding_matrix.npy', allow_pickle=True)
