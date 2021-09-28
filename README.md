@@ -1,7 +1,7 @@
 # Adversarial Training
 项目分为两部分：
 
-1、对抗训练自动学习epsilon超参数，利用keras_tuner
+1、对抗训练自动学习epsilon超参数
 
 2、利用unilm方法训练一个模型，将句子embedding进行还原，输出原始句子。目标是把加扰动的句子embedding还原，查看扰动的效果
 
